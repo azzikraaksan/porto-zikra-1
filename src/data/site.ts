@@ -4,7 +4,7 @@
  */
 export const site = {
   name: "Zikra",
-  role: "Software Engineer",
+  role: "Full Stack Developer",
   tagline:
     "Frontend Engineer & Backend Engineer — membangun platform SaaS BPM/Workflow enterprise yang aman, multi-tenant, dan tetap cepat di skala besar.",
   location: "Indonesia",
@@ -14,7 +14,7 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/azzikraaksan",
   url: "https://zikra.dev",
   typedRoles: [
-    "Software Engineer",
+    "Full Stack Developer",
     "Frontend Engineer",
     "Backend Engineer",
   ],

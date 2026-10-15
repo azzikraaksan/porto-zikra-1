@@ -19,7 +19,7 @@ export function SiteFooter() {
             Sedang membangun sesuatu yang kompleks? Mari berdiskusi.
           </h2>
           <p className="relative mx-auto mt-4 max-w-lg text-pretty text-muted-foreground">
-            Terbuka untuk peran Senior Software Engineer, terutama di produk SaaS, platform workflow, dan sistem
+            Terbuka untuk peran Full Stack Developer, terutama di produk SaaS, platform workflow, dan sistem
             multi-tenant.
           </p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

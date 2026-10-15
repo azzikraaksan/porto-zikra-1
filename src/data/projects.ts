@@ -1,4 +1,4 @@
-import { Boxes, Database, Layers, ListChecks, ShieldCheck, Workflow, type LucideIcon } from "lucide-react";
+﻿import { Boxes, Database, Layers, ListChecks, ShieldCheck, Workflow, type LucideIcon } from "lucide-react";
 import type { SkillSlug } from "./skills";
 import type { Shot } from "./types";
 
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     ],
     platform: "Web App (SaaS, multi-tenant)",
     role: {
-      title: "Software Engineer — Frontend & Platform",
+      title: "Full Stack Developer — Frontend & Platform",
       summary:
         "Saya bertanggung jawab atas fondasi teknis yang menyentuh hampir semua modul: isolasi data multi-tenant, keandalan state di frontend, sistem desain, serta fitur berat seperti schema builder dan operasi tugas massal.",
       highlights: ["Arsitektur multi-tenant", "Migrasi design system", "Bulk operations"],
@@ -73,7 +73,7 @@ export const projects: Project[] = [
       alt: "Potongan diagram BPMN AlurKerja",
       idea: "Close-up diagram BPMN (4:3)",
     },
-    skills: ["react", "typescript", "tailwind-css", "microservices", "nodejs"],
+    skills: ["react", "typescript", "testing", "database", "laravel-go"],
     tools: ["shadcn/ui", "BPMN", "Feature Flags", "RBAC", "Form Builder"],
     features: [
       {
