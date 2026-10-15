@@ -253,7 +253,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             id="detail-teknis"
             eyebrow="05"
             title="Detail teknis"
-            description="Lima tantangan teknis paling berdampak selama membangun platform ini."
+            description={`${caseStudies.length} tantangan teknis paling berdampak selama membangun platform ini.`}
           >
             <div className="space-y-16">
               {caseStudies.map((cs, i) => (
@@ -274,9 +274,16 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     <h3 className="mt-2 text-xl font-semibold tracking-tight">{cs.title}</h3>
                     <dl className="mt-5 space-y-4">
                       <DetailRow icon={Target} label="Tantangan" text={cs.challenge} />
-                      <DetailRow icon={Wrench} label="Eksekusi Teknis" text={cs.execution} />
+                      <DetailRow icon={Wrench} label="Eksekusi Teknis" items={cs.execution} />
                       <DetailRow icon={TrendingUp} label="Dampak" text={cs.impact} highlight />
                     </dl>
+                    <Link
+                      href={`/case-studies/${cs.slug}`}
+                      className={buttonVariants({ variant: "outline", size: "sm", className: "group mt-5" })}
+                    >
+                      Baca studi kasus lengkap
+                      <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+                    </Link>
                   </div>
                 </Reveal>
               ))}
@@ -387,11 +394,13 @@ function DetailRow({
   icon: Icon,
   label,
   text,
+  items,
   highlight,
 }: {
   icon: LucideIcon;
   label: string;
-  text: string;
+  text?: string;
+  items?: string[];
   highlight?: boolean;
 }) {
   return (
@@ -405,7 +414,16 @@ function DetailRow({
         <Icon className="size-3.5" />
         {label}
       </dt>
-      <dd className="mt-2 text-pretty text-sm leading-relaxed">{text}</dd>
+      <dd className="mt-2 text-pretty text-sm leading-relaxed">
+        {text}
+        {items ? (
+          <ul className="list-disc space-y-1.5 pl-4 marker:text-muted-foreground">
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        ) : null}
+      </dd>
     </div>
   );
 }

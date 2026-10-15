@@ -122,7 +122,7 @@ export default async function SkillPage({ params }: { params: Promise<Params> })
                 {related.map((study, i) => (
                   <Reveal as="li" key={study.slug} delay={i * 60}>
                     <Link
-                      href={`/#cs-${study.slug}`}
+                      href={`/case-studies/${study.slug}`}
                       className="group flex h-full items-start gap-3 rounded-lg border bg-card p-4 transition-colors hover:border-foreground/20 hover:bg-accent/40"
                     >
                       <study.icon className="mt-0.5 size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-brand" />

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ArrowRight, ChevronDown, Target, TrendingUp, Wrench, type LucideIcon } from "lucide-react";
-import { caseStudies, product, type CaseStudy } from "@/data/case-studies";
+import { caseStudies, categories, product, type CaseStudy } from "@/data/case-studies";
 import { getSkill } from "@/data/skills";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +47,7 @@ export function CaseStudies() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             eyebrow="Technical Case Studies"
-            title={`Lima tantangan enterprise di ${product.name}.`}
+            title={`${caseStudies.length} tantangan enterprise di ${product.name}.`}
             description={`Bukan daftar proyek — ini adalah masalah teknis nyata yang saya selesaikan saat membangun ${product.description}, lengkap dengan konteks, eksekusi, dan dampaknya.`}
           />
           <Reveal className="shrink-0">
@@ -61,18 +61,34 @@ export function CaseStudies() {
           </Reveal>
         </div>
 
-        <ol className="mt-12 space-y-4">
-          {caseStudies.map((study, i) => (
-            <Reveal as="li" key={study.slug} delay={i * 60}>
-              <CaseStudyItem
-                study={study}
-                index={i}
-                open={openSlugs.has(study.slug)}
-                onToggle={() => toggle(study.slug)}
-              />
-            </Reveal>
+        <div className="mt-12 space-y-12">
+          {categories.map((category, c) => (
+            <div key={category.slug}>
+              <Reveal className="mb-4 flex items-center gap-3">
+                <span className="font-mono text-xs text-brand">Kategori {c + 1}</span>
+                <h3 className="text-lg font-semibold tracking-tight sm:text-xl">{category.title}</h3>
+                <span aria-hidden="true" className="h-px flex-1 bg-border" />
+              </Reveal>
+              <ol className="space-y-4">
+                {caseStudies
+                  .filter((study) => study.category === category.slug)
+                  .map((study) => {
+                    const i = caseStudies.indexOf(study);
+                    return (
+                      <Reveal as="li" key={study.slug}>
+                        <CaseStudyItem
+                          study={study}
+                          index={i}
+                          open={openSlugs.has(study.slug)}
+                          onToggle={() => toggle(study.slug)}
+                        />
+                      </Reveal>
+                    );
+                  })}
+              </ol>
+            </div>
           ))}
-        </ol>
+        </div>
 
         <Reveal className="mt-8 flex justify-center">
           <Link href="/projects/alurkerja" className={buttonVariants({ variant: "outline", className: "group" })}>
@@ -104,7 +120,7 @@ function CaseStudyItem({ study, index, open, onToggle }: CaseStudyItemProps) {
         open ? "border-foreground/15 shadow-lg shadow-black/[0.03] dark:shadow-black/30" : "hover:border-foreground/15",
       )}
     >
-      <h3>
+      <h4>
         <button
           type="button"
           onClick={onToggle}
@@ -142,14 +158,14 @@ function CaseStudyItem({ study, index, open, onToggle }: CaseStudyItemProps) {
             )}
           />
         </button>
-      </h3>
+      </h4>
 
       <div id={panelId} role="region" aria-label={study.title} className="collapsible" data-open={open}>
         <div inert={!open}>
           <div className="border-t px-5 pb-6 pt-5 sm:px-6">
             <div className="grid gap-4 md:grid-cols-3">
               <Block icon={Target} label="Tantangan" text={study.challenge} />
-              <Block icon={Wrench} label="Eksekusi Teknis" text={study.execution} />
+              <Block icon={Wrench} label="Eksekusi Teknis" items={study.execution} />
               <Block icon={TrendingUp} label="Dampak" text={study.impact} highlight />
             </div>
 
@@ -170,6 +186,14 @@ function CaseStudyItem({ study, index, open, onToggle }: CaseStudyItemProps) {
                 );
               })}
             </div>
+
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+              <p className="font-mono text-xs text-muted-foreground">{study.repos.join(" · ")}</p>
+              <Link href={`/case-studies/${study.slug}`} className={buttonVariants({ size: "sm", className: "group" })}>
+                Baca studi kasus lengkap
+                <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -181,11 +205,13 @@ function Block({
   icon: Icon,
   label,
   text,
+  items,
   highlight,
 }: {
   icon: LucideIcon;
   label: string;
-  text: string;
+  text?: string;
+  items?: string[];
   highlight?: boolean;
 }) {
   return (
@@ -204,7 +230,14 @@ function Block({
         <Icon className="size-3.5" />
         {label}
       </p>
-      <p className="mt-2.5 text-pretty text-sm leading-relaxed text-foreground/90">{text}</p>
+      {text ? <p className="mt-2.5 text-pretty text-sm leading-relaxed text-foreground/90">{text}</p> : null}
+      {items ? (
+        <ul className="mt-2.5 list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-foreground/90 marker:text-muted-foreground">
+          {items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }
