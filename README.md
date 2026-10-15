@@ -14,7 +14,7 @@ npm run build && npm start
 | --- | --- |
 | Nama, email, link GitHub/LinkedIn, tagline, teks typing | `src/data/site.ts` |
 | File CV | taruh di `public/cv-zikra.pdf` (atau ubah `cvUrl`) |
-| 5 Technical Case Studies | `src/data/case-studies.ts` |
+| 7 Technical Case Studies (halaman `/case-studies/[slug]`) | `src/data/case-studies.ts` |
 | Isi halaman tiap skill (penerapan, prinsip, ekosistem, snippet) | `src/data/skills.ts` |
 | Proyek unggulan AlurKerja (hook, peran, fitur, dampak, periode, tim, live URL) | `src/data/projects.ts` |
 
