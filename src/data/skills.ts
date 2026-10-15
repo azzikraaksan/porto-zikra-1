@@ -1,7 +1,8 @@
-import type { ComponentType, SVGProps } from "react";
-import { MicroservicesIcon, NodeIcon, ReactIcon, TailwindIcon, TypeScriptIcon } from "@/components/icons";
+﻿import type { ComponentType, SVGProps } from "react";
+import { Database, GitBranch, Server, ShieldCheck } from "lucide-react";
+import { ReactIcon, TypeScriptIcon } from "@/components/icons";
 
-export type SkillSlug = "react" | "typescript" | "tailwind-css" | "microservices" | "nodejs";
+export type SkillSlug = "react" | "typescript" | "laravel-go" | "database" | "testing" | "git-tools";
 
 export type Skill = {
   slug: SkillSlug;
@@ -19,10 +20,10 @@ export type Skill = {
 export const skills: Skill[] = [
   {
     slug: "react",
-    name: "React",
+    name: "React.js & Next.js",
     category: "Frontend",
     icon: ReactIcon,
-    summary: "Arsitektur UI enterprise yang deterministik, aman dari race condition, dan mudah dirawat.",
+    summary: "Mengembangkan antarmuka aplikasi web, halaman fitur, dashboard, dan komponen UI yang dapat digunakan kembali.",
     description:
       "React adalah fondasi utama antarmuka AlurKerja. Fokus saya bukan sekadar membuat komponen, tetapi memastikan state tetap benar di bawah kondisi nyata: navigasi super cepat, pergantian tenant, dan ribuan item tugas yang diperbarui sekaligus.",
     inPractice: [
@@ -77,10 +78,10 @@ export const skills: Skill[] = [
   },
   {
     slug: "typescript",
-    name: "TypeScript",
-    category: "Language",
+    name: "TypeScript & JavaScript",
+    category: "Programming Languages",
     icon: TypeScriptIcon,
-    summary: "Kontrak tipe yang ketat sebagai garis pertahanan pertama untuk isolasi data dan integritas skema.",
+    summary: "Membangun fitur frontend dengan JavaScript dan TypeScript untuk mendukung pengembangan aplikasi web.",
     description:
       "Di sistem multi-tenant, bug paling mahal adalah bug yang lolos ke production tanpa error. Saya memakai TypeScript untuk mengubah aturan bisnis penting — seperti 'setiap query wajib membawa tenant' — menjadi error di waktu kompilasi.",
     inPractice: [
@@ -125,156 +126,176 @@ export function listTasks(params: TenantScoped<{ queue: string }>) {
     },
   },
   {
-    slug: "tailwind-css",
-    name: "Tailwind CSS",
-    category: "Styling & Design System",
-    icon: TailwindIcon,
-    summary: "Design system berbasis token yang konsisten di dark/light mode dan mudah dimigrasi.",
+    slug: "laravel-go",
+    name: "Laravel & Go",
+    category: "Backend",
+    icon: Server,
+    summary: "Mengembangkan fitur backend, REST API, dan logika aplikasi untuk mendukung kebutuhan platform.",
     description:
-      "Tailwind bersama shadcn/ui menjadi tulang punggung sistem desain baru AlurKerja. Kuncinya ada di token CSS variable: satu sumber kebenaran untuk warna, radius, dan spacing sehingga dark mode dan konsistensi visual didapat 'gratis'.",
+      "Di sisi backend, saya mengembangkan fitur, REST API, dan logika aplikasi menggunakan Laravel dan Go untuk mendukung kebutuhan platform, termasuk pengelolaan data dan kontrol akses pengguna.",
     inPractice: [
-      "Menstandarkan token tema (CSS variables) sehingga dark/light mode konsisten di seluruh modul yang dimigrasi.",
-      "Menyusun komponen berbasis varian agar tim bisa berpindah dari komponen legacy tanpa menulis ulang styling.",
-      "Memperbaiki isu aksesibilitas (focus ring, kontras, state disabled) sebagai bagian dari migrasi ke shadcn/ui.",
+      "Mengembangkan REST API untuk fitur platform yang dikonsumsi langsung oleh frontend.",
+      "Menerapkan logika aplikasi dan kontrol akses pengguna (RBAC) di sisi backend.",
+      "Memproses operasi data dalam jumlah besar secara bertahap agar server tetap responsif.",
     ],
     principles: [
       {
-        title: "Token, bukan warna",
-        body: "Komponen hanya mengenal bg-primary atau text-muted-foreground — nilai warnanya diatur oleh tema.",
-      },
-      {
-        title: "Varian yang eksplisit",
-        body: "Variasi komponen didefinisikan di satu tempat, bukan disebar sebagai className ad-hoc di setiap halaman.",
-      },
-      {
-        title: "Aksesibilitas bawaan",
-        body: "focus-visible, aria-*, dan prefers-reduced-motion adalah bagian dari komponen dasar, bukan tambahan.",
-      },
-    ],
-    ecosystem: ["shadcn/ui", "Radix UI", "CSS Variables", "tailwind-merge", "class-variance-authority", "Dark mode"],
-    snippet: {
-      filename: "button.tsx",
-      caption: "Komponen berbasis token & varian (disederhanakan) — dark mode tanpa duplikasi kelas.",
-      code: `const variants = {
-  default: "bg-primary text-primary-foreground hover:bg-primary/90",
-  outline: "border border-input bg-background hover:bg-accent",
-  ghost: "hover:bg-accent hover:text-accent-foreground",
-} as const;
-
-export function Button({ variant = "default", className, ...props }: ButtonProps) {
-  return (
-    <button
-      className={cn(
-        "inline-flex h-10 items-center gap-2 rounded-md px-4 text-sm font-medium",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        variants[variant],
-        className,
-      )}
-      {...props}
-    />
-  );
-}`,
-    },
-  },
-  {
-    slug: "microservices",
-    name: "Microservices",
-    category: "Architecture",
-    icon: MicroservicesIcon,
-    summary: "Batas layanan yang jelas, kontrak API yang tegas, dan otorisasi yang ditegakkan di setiap boundary.",
-    description:
-      "AlurKerja terdiri dari puluhan modul yang harus tetap terisolasi per tenant. Saya bekerja di level kontrak antar-layanan: memastikan setiap service menegakkan aturan tenant dan RBAC yang sama, serta operasi massal tidak meninggalkan sistem dalam kondisi setengah jadi.",
-    inPractice: [
-      "Menegakkan isolasi tenant di kontrak API dan skema database, dengan RBAC ketat yang mengembalikan 403 secara konsisten.",
-      "Membatasi akses level admin agar operasi lintas-tenant hanya bisa dilakukan lewat jalur yang terkontrol.",
-      "Merancang alur bulk claim & complete yang aman terhadap kegagalan parsial dan tetap tersinkron dengan status di diagram BPMN.",
-    ],
-    principles: [
-      {
-        title: "Zero trust antar-service",
-        body: "Tenant dan peran diverifikasi di setiap boundary — tidak ada service yang mengandalkan pemeriksaan service lain.",
-      },
-      {
-        title: "Kontrak sebelum implementasi",
+        title: "Kontrak API yang jelas",
         body: "Bentuk request/response dan kode error disepakati di awal sehingga frontend dan backend bisa bergerak paralel.",
       },
       {
-        title: "Gagal sebagian, bukan gagal diam-diam",
-        body: "Operasi massal melaporkan hasil per item sehingga UI bisa menampilkan dengan jujur apa yang berhasil dan apa yang tidak.",
+        title: "Validasi di pintu masuk",
+        body: "Input divalidasi ketat sebelum menjadi perubahan data atau logika bisnis.",
+      },
+      {
+        title: "Akses ditegakkan di server",
+        body: "Pemeriksaan peran dan izin dilakukan di backend, bukan hanya disembunyikan di UI.",
       },
     ],
-    ecosystem: ["REST API", "RBAC", "Multi-tenancy", "BPMN engine", "API Gateway", "Docker"],
+    ecosystem: ["Laravel", "Go", "REST API", "RBAC", "Eloquent", "Docker"],
     snippet: {
-      filename: "tenant-guard.ts",
-      caption: "Middleware tenant & RBAC (disederhanakan) — kontrak yang sama di setiap boundary.",
-      code: `export const tenantGuard =
-  (required: Permission): RequestHandler =>
-  async (req, res, next) => {
-    const { tenantId, roles } = req.auth; // dari token terverifikasi
-    const target = req.params.tenantId;
+      filename: "bulk-complete.go",
+      caption: "Operasi massal per-batch (disederhanakan) — laporan per item, bukan all-or-nothing.",
+      code: `func BulkComplete(ctx context.Context, ids []string) []Result {
+	results := make([]Result, 0, len(ids))
 
-    if (target !== tenantId) {
-      return res.status(403).json({ code: "TENANT_MISMATCH" });
-    }
-    if (!can(roles, required)) {
-      return res.status(403).json({ code: "FORBIDDEN" });
-    }
+	for _, batch := range chunk(ids, 50) {
+		for _, id := range batch {
+			if err := completeTask(ctx, id); err != nil {
+				results = append(results, Result{ID: id, OK: false, Reason: err.Error()})
+				continue
+			}
+			results = append(results, Result{ID: id, OK: true})
+		}
+	}
 
-    req.db = db.withSchema(schemaFor(tenantId)); // isolasi di level skema
-    next();
-  };`,
+	return results // UI menandai item gagal tanpa membatalkan yang sukses
+}`,
     },
   },
   {
-    slug: "nodejs",
-    name: "Node.js",
-    category: "Backend",
-    icon: NodeIcon,
-    summary: "Layanan backend yang efisien untuk operasi massal, master data, dan validasi skema dinamis.",
+    slug: "database",
+    name: "PostgreSQL & MySQL",
+    category: "Database",
+    icon: Database,
+    summary: "Merancang skema database dan mengembangkan API untuk pengelolaan data aplikasi.",
     description:
-      "Node.js saya gunakan untuk layanan yang dekat dengan kebutuhan UI: memproses unggahan massal, mengeksekusi aksi tugas secara konkuren, dan memvalidasi perubahan skema yang diminta pengguna non-teknis sebelum menyentuh database.",
+      "Saya merancang skema database dan mengembangkan API untuk pengelolaan data aplikasi menggunakan PostgreSQL dan MySQL, dengan perhatian pada integritas data dan isolasi antar tenant.",
     inPractice: [
-      "Membangun pipeline bulk upload master data dengan filter per-kolom dan validasi tipe sebelum data ditulis.",
-      "Mengeksekusi aksi tugas massal secara bertahap (batch) agar server tidak kewalahan dan kegagalan tidak merambat.",
-      "Mengontrol transisi tipe kolom secara ketat di master data engine untuk menjaga integritas data yang sudah ada.",
+      "Merancang skema tabel dan relasi untuk kebutuhan fitur aplikasi.",
+      "Mengembangkan API untuk membaca dan mengelola data dari database.",
+      "Menjaga integritas data saat terjadi perubahan struktur atau tipe kolom.",
     ],
     principles: [
       {
-        title: "Batch & backpressure",
-        body: "Pekerjaan besar dipecah menjadi potongan kecil agar event loop tetap responsif dan beban database terkendali.",
+        title: "Skema sebagai kontrak",
+        body: "Constraint, relasi, dan tipe data didefinisikan di database agar data tetap konsisten.",
       },
       {
-        title: "Validasi di pintu masuk",
-        body: "Input dari pengguna non-teknis divalidasi ketat sebelum menjadi perubahan skema atau baris data.",
+        title: "Perubahan lewat migrasi",
+        body: "Setiap perubahan struktur dilakukan lewat migrasi yang dapat ditinjau dan diulang.",
       },
       {
-        title: "Idempoten bila memungkinkan",
-        body: "Aksi seperti klaim tugas aman untuk diulang sehingga retry dari klien tidak menimbulkan duplikasi.",
+        title: "Query yang terukur",
+        body: "Index dan query dipilih berdasarkan pola akses nyata, bukan perkiraan.",
       },
     ],
-    ecosystem: ["Express", "PostgreSQL", "REST", "Streams", "Queue / Worker", "Jest"],
+    ecosystem: ["PostgreSQL", "MySQL", "Migrations", "Indexing", "SQL"],
     snippet: {
-      filename: "bulk-complete.ts",
-      caption: "Operasi massal per-batch (disederhanakan) — laporan per item, bukan all-or-nothing.",
-      code: `export async function bulkComplete(tenantId: TenantId, taskIds: string[]) {
-  const results: BulkResult[] = [];
+      filename: "create_tasks_table.sql",
+      caption: "Skema dengan constraint dan index (disederhanakan).",
+      code: `CREATE TABLE tasks (
+  id         BIGSERIAL PRIMARY KEY,
+  tenant_id  BIGINT       NOT NULL REFERENCES tenants (id),
+  title      VARCHAR(255) NOT NULL,
+  status     VARCHAR(32)  NOT NULL DEFAULT 'open',
+  created_at TIMESTAMPTZ  NOT NULL DEFAULT now()
+);
 
-  for (const batch of chunk(taskIds, 50)) {
-    const settled = await Promise.allSettled(
-      batch.map((id) => completeTask(tenantId, id)),
-    );
+CREATE INDEX idx_tasks_tenant_status ON tasks (tenant_id, status);`,
+    },
+  },
+  {
+    slug: "testing",
+    name: "Testing & Code Quality",
+    category: "Quality Assurance",
+    icon: ShieldCheck,
+    summary: "Memperbaiki bug, melakukan unit testing menggunakan Vitest dan Go test, serta menangani temuan SonarQube.",
+    description:
+      "Saya memperbaiki bug, menulis unit test dengan Vitest dan Go test, serta menangani temuan SonarQube agar kode tetap berkualitas dan mudah dipelihara.",
+    inPractice: [
+      "Menemukan akar masalah dan memperbaiki bug melalui debugging.",
+      "Menulis unit test untuk frontend dengan Vitest dan untuk backend dengan Go test.",
+      "Menindaklanjuti temuan SonarQube untuk menjaga kualitas kode.",
+    ],
+    principles: [
+      {
+        title: "Bug diperbaiki dengan test",
+        body: "Perbaikan disertai test yang mereproduksi masalah agar tidak muncul kembali.",
+      },
+      {
+        title: "Test yang fokus",
+        body: "Setiap test menguji satu perilaku dengan input dan hasil yang jelas.",
+      },
+      {
+        title: "Kualitas terukur",
+        body: "Temuan analisis statis ditangani secara berkala, bukan menumpuk.",
+      },
+    ],
+    ecosystem: ["Vitest", "Go test", "SonarQube", "Debugging"],
+    snippet: {
+      filename: "format.test.ts",
+      caption: "Unit test dengan Vitest (disederhanakan).",
+      code: `import { describe, expect, it } from "vitest";
+import { formatStatus } from "./format";
 
-    settled.forEach((r, i) =>
-      results.push(
-        r.status === "fulfilled"
-          ? { id: batch[i], ok: true }
-          : { id: batch[i], ok: false, reason: String(r.reason) },
-      ),
-    );
-  }
+describe("formatStatus", () => {
+  it("menampilkan label yang sesuai", () => {
+    expect(formatStatus("open")).toBe("Terbuka");
+  });
 
-  return results; // UI menandai item gagal tanpa membatalkan yang sukses
-}`,
+  it("memakai nilai bawaan untuk status tak dikenal", () => {
+    expect(formatStatus("unknown")).toBe("-");
+  });
+});`,
+    },
+  },
+  {
+    slug: "git-tools",
+    name: "Git, GitLab & GitHub",
+    category: "Development Tools",
+    icon: GitBranch,
+    summary: "Menggunakan version control untuk mendukung pengelolaan kode selama proses pengembangan aplikasi.",
+    description:
+      "Saya menggunakan Git, GitLab, dan GitHub untuk mengelola kode, berkolaborasi lewat branch dan merge request, serta menjaga riwayat perubahan tetap rapi selama pengembangan aplikasi.",
+    inPractice: [
+      "Bekerja dengan branch fitur dan merge request/pull request untuk setiap perubahan.",
+      "Menyelesaikan konflik merge dan menjaga riwayat commit tetap jelas.",
+      "Berkolaborasi dengan tim melalui code review di GitLab dan GitHub.",
+    ],
+    principles: [
+      {
+        title: "Commit yang kecil",
+        body: "Satu commit untuk satu perubahan yang bermakna agar mudah ditinjau dan ditelusuri.",
+      },
+      {
+        title: "Review sebelum merge",
+        body: "Perubahan masuk lewat merge request agar kualitas terjaga bersama tim.",
+      },
+      {
+        title: "Riwayat yang bisa dibaca",
+        body: "Pesan commit menjelaskan alasan perubahan, bukan hanya apa yang berubah.",
+      },
+    ],
+    ecosystem: ["Git", "GitLab", "GitHub", "Merge request", "Code review"],
+    snippet: {
+      filename: "workflow.sh",
+      caption: "Alur kerja branch fitur (disederhanakan).",
+      code: `git checkout -b feat/bulk-task-actions
+git add .
+git commit -m "feat: add bulk claim and complete actions"
+git push -u origin feat/bulk-task-actions
+# lanjutkan dengan membuka merge request / pull request`,
     },
   },
 ];

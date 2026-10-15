@@ -1,4 +1,4 @@
-import { Bot, Database, ListChecks, ShieldCheck, Table, Workflow, Zap, type LucideIcon } from "lucide-react";
+﻿import { Bot, Database, ListChecks, ShieldCheck, Table, Workflow, Zap, type LucideIcon } from "lucide-react";
 import type { SkillSlug } from "./skills";
 import type { Shot } from "./types";
 
@@ -42,7 +42,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Schema Builder: Tabel Dinamis Per Tenant",
     icon: Table,
     highlights: ["Dynamic DDL", "varchar(N) aman", "Quality gate SonarQube"],
-    skills: ["react", "typescript", "nodejs"],
+    skills: ["react", "typescript", "laravel-go"],
     repos: ["report-service", "studio-react"],
     challenge:
       "Tenant bisa membuat tabel database sendiri. DDL dinamis berisiko: perubahan tipe bisa merusak data, nama tabel bisa bentrok, dan semuanya harus terisolasi per tenant.",
@@ -68,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Master Data Engine: Integritas di Level Database",
     icon: Database,
     highlights: ["Unique di DB", "Bulk upload", "Upload dua langkah"],
-    skills: ["nodejs", "typescript", "react"],
+    skills: ["laravel-go", "typescript", "react"],
     repos: ["bpm-service", "studio-react", "app-react-1"],
     challenge:
       "Master data adalah tabel buatan user dengan definisi kolom yang dinamis. Keunikan dan pencarian harus tetap cepat dan benar walau skemanya tidak tetap.",
@@ -94,7 +94,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Lapisan Integrasi Agen AI: MCP Tools dan AI Gateway",
     icon: Bot,
     highlights: ["Puluhan tool MCP", "TEST/LIVE selector", "Fallback antar-vendor"],
-    skills: ["nodejs", "typescript", "microservices"],
+    skills: ["laravel-go", "typescript", "database"],
     repos: ["integration-service", "bpm-service", "helpdesk"],
     challenge:
       "Platform perlu bisa dioperasikan oleh agen AI secara aman: lintas environment, dengan batasan role, dan tidak bergantung pada satu vendor LLM.",
@@ -118,7 +118,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Isolasi Multi-Tenant dan RBAC End-to-End",
     icon: ShieldCheck,
     highlights: ["Slug unik per tenant", "RBAC · 403", "Lintas repo"],
-    skills: ["microservices", "nodejs", "typescript", "react"],
+    skills: ["database", "laravel-go", "typescript", "react"],
     repos: ["lintas repo"],
     challenge:
       "Kebocoran antar tenant biasanya muncul di detail kecil seperti slug, header, dan guard route. Satu celah saja sudah cukup untuk bocor.",
@@ -168,7 +168,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Bulk Claim dan Bulk Complete Task",
     icon: ListChecks,
     highlights: ["Filtered select-all", "Bulk claim", "Dark mode"],
-    skills: ["react", "typescript", "tailwind-css"],
+    skills: ["react", "typescript", "testing"],
     repos: ["app-react-1"],
     challenge:
       'Operasi massal atas ratusan task menimbulkan masalah konsistensi: sebagian bisa gagal, seleksi harus akurat, dan filter harus ikut memengaruhi "select all".',

@@ -28,7 +28,7 @@ export function Hero() {
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-60" />
               <span className="relative inline-flex size-2 rounded-full bg-brand" />
             </span>
-            Open to Senior Software Engineer roles
+            Open to Full Stack Developer roles
           </div>
 
           <h1 className="mt-6 animate-fade-up" style={fadeUp(80)}>
